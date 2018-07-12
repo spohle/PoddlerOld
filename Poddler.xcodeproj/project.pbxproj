@@ -11,6 +11,8 @@
 		573BA31720F7AC26002318BC /* PodcastSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573BA31620F7AC26002318BC /* PodcastSearchController.swift */; };
 		573BA31A20F7ACBD002318BC /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573BA31920F7ACBD002318BC /* Podcast.swift */; };
 		57E6CF1220F7E46A000F4925 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6CF1120F7E46A000F4925 /* APIService.swift */; };
+		57E6CF1520F7E8EB000F4925 /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57E6CF1420F7E8EB000F4925 /* PodcastCell.xib */; };
+		57E6CF1720F7EA8D000F4925 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6CF1620F7EA8D000F4925 /* PodcastCell.swift */; };
 		9545F4348B31A219DE138D9B /* Pods_Poddler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A613C26E454E9AF96B0265 /* Pods_Poddler.framework */; };
 		F0F289E520F6AE8D006879C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F289E420F6AE8D006879C1 /* AppDelegate.swift */; };
 		F0F289E720F6AE8D006879C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F289E620F6AE8D006879C1 /* ViewController.swift */; };
@@ -26,6 +28,8 @@
 		573BA31620F7AC26002318BC /* PodcastSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSearchController.swift; sourceTree = "<group>"; };
 		573BA31920F7ACBD002318BC /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		57E6CF1120F7E46A000F4925 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		57E6CF1420F7E8EB000F4925 /* PodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
+		57E6CF1620F7EA8D000F4925 /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
 		D295DDBF4A9BD2A6D6419441 /* Pods-Poddler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poddler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Poddler/Pods-Poddler.release.xcconfig"; sourceTree = "<group>"; };
 		F0F289E120F6AE8D006879C1 /* Poddler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poddler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F289E420F6AE8D006879C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +84,15 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		57E6CF1320F7E8CD000F4925 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				57E6CF1420F7E8EB000F4925 /* PodcastCell.xib */,
+				57E6CF1620F7EA8D000F4925 /* PodcastCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		71B0644CAEFA2669DF183308 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +131,7 @@
 		F0F289E320F6AE8D006879C1 /* Poddler */ = {
 			isa = PBXGroup;
 			children = (
+				57E6CF1320F7E8CD000F4925 /* Views */,
 				57E6CF1020F7E45A000F4925 /* API */,
 				573BA31820F7AC99002318BC /* Models */,
 				573BA31420F7ABC1002318BC /* Controllers */,
@@ -194,6 +208,7 @@
 			files = (
 				F0F289EF20F6AE8F006879C1 /* LaunchScreen.storyboard in Resources */,
 				F0F289EC20F6AE8F006879C1 /* Assets.xcassets in Resources */,
+				57E6CF1520F7E8EB000F4925 /* PodcastCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +260,7 @@
 			files = (
 				573BA31720F7AC26002318BC /* PodcastSearchController.swift in Sources */,
 				57E6CF1220F7E46A000F4925 /* APIService.swift in Sources */,
+				57E6CF1720F7EA8D000F4925 /* PodcastCell.swift in Sources */,
 				F0F289E720F6AE8D006879C1 /* ViewController.swift in Sources */,
 				573BA31A20F7ACBD002318BC /* Podcast.swift in Sources */,
 				573BA31120F6D74F002318BC /* UIColor_ext.swift in Sources */,

@@ -34,7 +34,8 @@ class PodcastsSearchController: UITableViewController {
     
     
     fileprivate func setupTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: podcastsSearchTableCellId)
+        let nib = UINib(nibName: "PodcastCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: podcastsSearchTableCellId)
     }
 }
 
@@ -45,14 +46,16 @@ extension PodcastsSearchController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: podcastsSearchTableCellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: podcastsSearchTableCellId, for: indexPath) as! PodcastCell
         
         let podcast = podcasts[indexPath.row]
-        cell.textLabel?.numberOfLines = -1
-        cell.textLabel?.text = "\(podcast.trackName ?? "")\n\(podcast.artistName ?? "")"
-        cell.imageView?.image = UIImage(named: "appicon.png")
         
+        cell.podcast = podcast
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 132
     }
 }
 
