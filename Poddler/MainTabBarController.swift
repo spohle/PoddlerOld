@@ -10,12 +10,10 @@ import UIKit
 
 
 class MainTabBarController: UITabBarController {
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBar.tintColor = .purple
+        tabBar.tintColor = ColorTheme.tabBarTintColor
         
         setupViewControllers()
     }
@@ -23,8 +21,8 @@ class MainTabBarController: UITabBarController {
     //MARK: - Setup Functions
     fileprivate func setupViewControllers() {
         viewControllers = [
+            generateNavigationController(viewController: PodcastsSearchController(), title: "Search", image: #imageLiteral(resourceName: "search")),
             generateNavigationController(viewController: ViewController(), title: "Favorites", image: #imageLiteral(resourceName: "favorites")),
-            generateNavigationController(viewController: ViewController(), title: "Search", image: #imageLiteral(resourceName: "search")),
             generateNavigationController(viewController: ViewController(), title: "Downloads", image: #imageLiteral(resourceName: "downloads"))
         ]
     }
