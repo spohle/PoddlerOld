@@ -7,13 +7,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class PodcastsSearchController: UITableViewController {
     
-    let podcasts = [
-        Podcast(name: "Lets Build That App", artistName: "Sveni"),
-        Podcast(name: "The New York Times Daily", artistName: "NYT"),
-    ]
+    var podcasts = [Podcast]()
     
     let podcastsSearchTableCellId = "podcastsSearchTableCellId"
     let searchController = UISearchController(searchResultsController: nil)
@@ -51,7 +49,7 @@ extension PodcastsSearchController {
         
         let podcast = podcasts[indexPath.row]
         cell.textLabel?.numberOfLines = -1
-        cell.textLabel?.text = "\(podcast.name)\n\(podcast.artistName)"
+        cell.textLabel?.text = "\(podcast.trackName ?? "")\n\(podcast.artistName ?? "")"
         cell.imageView?.image = UIImage(named: "appicon.png")
         
         return cell
@@ -67,8 +65,10 @@ extension PodcastsSearchController: UISearchControllerDelegate {
 
 extension PodcastsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // here we should parse through the data but not do a network request all the time
-        print(searchText)
+        APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
+            self.podcasts = podcasts
+            self.tableView.reloadData()
+        }
     }
 }
 
