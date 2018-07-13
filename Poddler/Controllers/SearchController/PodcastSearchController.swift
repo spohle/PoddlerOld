@@ -15,11 +15,49 @@ class PodcastsSearchController: UITableViewController {
     
     let podcastsSearchTableCellId = "podcastsSearchTableCellId"
     let searchController = UISearchController(searchResultsController: nil)
+    let animationDuration = 0.25
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupSearchBar()
+        setupOverlayView()
+    }
+    
+    let uiOverlayView: UIView = {
+       let view = UIView()
+        view.backgroundColor = ColorTheme.searchController.overlayColor
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let uiOverlayLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Search for Podcasts"
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = ColorTheme.searchController.overlayTextColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    fileprivate func setupOverlayView() {
+        guard let navView = self.navigationController?.view else { return }
+        
+        navView.addSubview(uiOverlayView)
+        uiOverlayView.centerXAnchor.constraint(equalTo: navView.centerXAnchor).isActive = true
+        uiOverlayView.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
+        uiOverlayView.widthAnchor.constraint(equalTo: navView.widthAnchor, multiplier: 0.8).isActive = true
+        uiOverlayView.heightAnchor.constraint(equalTo: navView.widthAnchor, multiplier: 0.5).isActive = true
+        uiOverlayView.layer.cornerRadius = 10
+        uiOverlayView.layer.masksToBounds = true
+        
+        uiOverlayView.addSubview(uiOverlayLabel)
+        uiOverlayLabel.centerXAnchor.constraint(equalTo: uiOverlayView.centerXAnchor).isActive = true
+        uiOverlayLabel.centerYAnchor.constraint(equalTo: uiOverlayView.centerYAnchor).isActive = true
+        uiOverlayLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        uiOverlayLabel.widthAnchor.constraint(equalTo: uiOverlayView.widthAnchor).isActive = true
     }
     
     //MARK: - SearchBar
@@ -36,6 +74,7 @@ class PodcastsSearchController: UITableViewController {
     fileprivate func setupTableView() {
         let nib = UINib(nibName: "PodcastCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: podcastsSearchTableCellId)
+        tableView.separatorColor = .clear
     }
 }
 
@@ -61,8 +100,26 @@ extension PodcastsSearchController {
 
 //MARK: - EXTENSIONS
 extension PodcastsSearchController: UISearchControllerDelegate {
-    func didPresentSearchController(_ searchController: UISearchController) {
-        // this is where we should request the network data
+    func willPresentSearchController(_ searchController: UISearchController) {
+        
+        UIView.animate(withDuration: animationDuration, animations: {
+            self.uiOverlayView.backgroundColor = self.uiOverlayView.backgroundColor?.withAlphaComponent(0.0)
+            self.uiOverlayView.frame.origin.y = 400
+        }) { (finished) in
+            self.uiOverlayView.isHidden = true
+        }
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        if self.podcasts.count == 0 {
+            
+            self.uiOverlayView.isHidden = false
+            UIView.animate(withDuration: animationDuration) {
+                self.uiOverlayView.backgroundColor = self.uiOverlayView.backgroundColor?.withAlphaComponent(1.0)
+                self.uiOverlayLabel.textColor = self.uiOverlayLabel.textColor.withAlphaComponent(1.0)
+                self.uiOverlayView.frame.origin.y = 0
+            }
+        }
     }
 }
 
