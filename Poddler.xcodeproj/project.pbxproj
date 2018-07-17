@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		571DE96020F96156006B1461 /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571DE95F20F96156006B1461 /* EpisodesController.swift */; };
 		573BA31120F6D74F002318BC /* UIColor_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573BA31020F6D74F002318BC /* UIColor_ext.swift */; };
 		573BA31720F7AC26002318BC /* PodcastSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573BA31620F7AC26002318BC /* PodcastSearchController.swift */; };
 		573BA31A20F7ACBD002318BC /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573BA31920F7ACBD002318BC /* Podcast.swift */; };
+		5747AB9820FE9EB30012CB3B /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5747AB9720FE9EB30012CB3B /* Episode.swift */; };
 		57E6CF1220F7E46A000F4925 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6CF1120F7E46A000F4925 /* APIService.swift */; };
 		57E6CF1520F7E8EB000F4925 /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57E6CF1420F7E8EB000F4925 /* PodcastCell.xib */; };
 		57E6CF1720F7EA8D000F4925 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6CF1620F7EA8D000F4925 /* PodcastCell.swift */; };
@@ -24,9 +26,11 @@
 /* Begin PBXFileReference section */
 		2F0320E61245EF604F223BB1 /* Pods-Poddler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poddler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Poddler/Pods-Poddler.debug.xcconfig"; sourceTree = "<group>"; };
 		31A613C26E454E9AF96B0265 /* Pods_Poddler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Poddler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		571DE95F20F96156006B1461 /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		573BA31020F6D74F002318BC /* UIColor_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_ext.swift; sourceTree = "<group>"; };
 		573BA31620F7AC26002318BC /* PodcastSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSearchController.swift; sourceTree = "<group>"; };
 		573BA31920F7ACBD002318BC /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
+		5747AB9720FE9EB30012CB3B /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		57E6CF1120F7E46A000F4925 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		57E6CF1420F7E8EB000F4925 /* PodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
 		57E6CF1620F7EA8D000F4925 /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
@@ -64,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				573BA31620F7AC26002318BC /* PodcastSearchController.swift */,
+				571DE95F20F96156006B1461 /* EpisodesController.swift */,
 			);
 			path = SearchController;
 			sourceTree = "<group>";
@@ -72,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				573BA31920F7ACBD002318BC /* Podcast.swift */,
+				5747AB9720FE9EB30012CB3B /* Episode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,11 +269,13 @@
 				573BA31720F7AC26002318BC /* PodcastSearchController.swift in Sources */,
 				57E6CF1220F7E46A000F4925 /* APIService.swift in Sources */,
 				57E6CF1720F7EA8D000F4925 /* PodcastCell.swift in Sources */,
+				5747AB9820FE9EB30012CB3B /* Episode.swift in Sources */,
 				F0F289E720F6AE8D006879C1 /* ViewController.swift in Sources */,
 				573BA31A20F7ACBD002318BC /* Podcast.swift in Sources */,
 				573BA31120F6D74F002318BC /* UIColor_ext.swift in Sources */,
 				F0F289E520F6AE8D006879C1 /* AppDelegate.swift in Sources */,
 				F0F289F720F6AF6B006879C1 /* MainTabBarController.swift in Sources */,
+				571DE96020F96156006B1461 /* EpisodesController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

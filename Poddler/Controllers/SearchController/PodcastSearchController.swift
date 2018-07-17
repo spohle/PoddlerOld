@@ -62,6 +62,7 @@ class PodcastsSearchController: UITableViewController {
     
     //MARK: - SearchBar
     fileprivate func setupSearchBar() {
+        self.definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search for Podcasts..."
@@ -87,14 +88,20 @@ extension PodcastsSearchController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: podcastsSearchTableCellId, for: indexPath) as! PodcastCell
         
-        let podcast = podcasts[indexPath.row]
-        
+        let podcast = self.podcasts[indexPath.row]
         cell.podcast = podcast
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 132
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let episodesController = EpisodesController()
+        episodesController.podcast = podcasts[indexPath.row]
+        navigationController?.pushViewController(episodesController, animated: true)
     }
 }
 
