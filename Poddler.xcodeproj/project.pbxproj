@@ -12,6 +12,8 @@
 		573BA31720F7AC26002318BC /* PodcastSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573BA31620F7AC26002318BC /* PodcastSearchController.swift */; };
 		573BA31A20F7ACBD002318BC /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573BA31920F7ACBD002318BC /* Podcast.swift */; };
 		5747AB9820FE9EB30012CB3B /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5747AB9720FE9EB30012CB3B /* Episode.swift */; };
+		57DDB95120FEABB700F860A0 /* EpisodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57DDB95020FEABB700F860A0 /* EpisodeCell.xib */; };
+		57DDB95320FEAF2600F860A0 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDB95220FEAF2600F860A0 /* EpisodeCell.swift */; };
 		57E6CF1220F7E46A000F4925 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6CF1120F7E46A000F4925 /* APIService.swift */; };
 		57E6CF1520F7E8EB000F4925 /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57E6CF1420F7E8EB000F4925 /* PodcastCell.xib */; };
 		57E6CF1720F7EA8D000F4925 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6CF1620F7EA8D000F4925 /* PodcastCell.swift */; };
@@ -31,6 +33,8 @@
 		573BA31620F7AC26002318BC /* PodcastSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSearchController.swift; sourceTree = "<group>"; };
 		573BA31920F7ACBD002318BC /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		5747AB9720FE9EB30012CB3B /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		57DDB95020FEABB700F860A0 /* EpisodeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpisodeCell.xib; sourceTree = "<group>"; };
+		57DDB95220FEAF2600F860A0 /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		57E6CF1120F7E46A000F4925 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		57E6CF1420F7E8EB000F4925 /* PodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
 		57E6CF1620F7EA8D000F4925 /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
@@ -95,6 +99,8 @@
 			children = (
 				57E6CF1420F7E8EB000F4925 /* PodcastCell.xib */,
 				57E6CF1620F7EA8D000F4925 /* PodcastCell.swift */,
+				57DDB95020FEABB700F860A0 /* EpisodeCell.xib */,
+				57DDB95220FEAF2600F860A0 /* EpisodeCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -213,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0F289EF20F6AE8F006879C1 /* LaunchScreen.storyboard in Resources */,
+				57DDB95120FEABB700F860A0 /* EpisodeCell.xib in Resources */,
 				F0F289EC20F6AE8F006879C1 /* Assets.xcassets in Resources */,
 				57E6CF1520F7E8EB000F4925 /* PodcastCell.xib in Resources */,
 			);
@@ -229,11 +236,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Poddler/Pods-Poddler-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/FeedKit/FeedKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeedKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,6 +278,7 @@
 				573BA31720F7AC26002318BC /* PodcastSearchController.swift in Sources */,
 				57E6CF1220F7E46A000F4925 /* APIService.swift in Sources */,
 				57E6CF1720F7EA8D000F4925 /* PodcastCell.swift in Sources */,
+				57DDB95320FEAF2600F860A0 /* EpisodeCell.swift in Sources */,
 				5747AB9820FE9EB30012CB3B /* Episode.swift in Sources */,
 				F0F289E720F6AE8D006879C1 /* ViewController.swift in Sources */,
 				573BA31A20F7ACBD002318BC /* Podcast.swift in Sources */,

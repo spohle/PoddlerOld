@@ -9,5 +9,7 @@
 import Foundation
 
 struct Episode {
-    let title: String
+    var title: String
+    var pubDate: Date
+    var summary: String
 }

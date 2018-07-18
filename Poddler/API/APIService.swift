@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import FeedKit
 
 class APIService {
     static let shared = APIService()
@@ -42,5 +43,29 @@ class APIService {
     struct SearchResults: Decodable {
         let resultCount: Int
         let results: [Podcast]
+    }
+    
+    func fetchEpisodes(baseUrl: String, completionHandler: @escaping ([Episode]) -> ()) {
+        let feedUrl = URL(string: baseUrl)!
+        let parser = FeedParser(URL: feedUrl)
+        parser.parseAsync(queue: DispatchQueue.global(qos: .userInitiated)) { (result) in
+            guard let feed = result.rssFeed, result.isSuccess else {
+                print("Could not parse the Episodes Feed! Error: \(String(describing: result.error))")
+                return
+            }
+            
+            var episodes = [Episode]()
+            guard let items = feed.items else { return }
+            items.forEach { item in
+                let title = item.title ?? ""
+                let pubDate = item.pubDate ?? Date()
+                let summary = item.iTunes?.iTunesSummary ?? ""
+                
+                let episode = Episode(title: title, pubDate: pubDate, summary: summary)
+                episodes.append(episode)
+            }
+            
+            completionHandler(episodes)
+        }
     }
 }
