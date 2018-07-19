@@ -20,9 +20,16 @@ class EpisodeCell: UITableViewCell {
             let dateFormatterPrint = DateFormatter()
             dateFormatterPrint.dateFormat = "MMM dd, yyyy"
             
+            uiTitle.numberOfLines = 0
             uiTitle.text = episode.title
             uiDate.text = dateFormatterPrint.string(from: episode.pubDate)
             uiSummary.text = episode.summary
+            self.layoutSubviews()
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        uiTitle.sizeToFit()
     }
 }

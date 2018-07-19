@@ -12,4 +12,6 @@ struct Episode {
     var title: String
     var pubDate: Date
     var summary: String
+    var streamUrl: String
+    var imageUrl: String
 }

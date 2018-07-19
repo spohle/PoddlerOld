@@ -46,6 +46,7 @@ class APIService {
     }
     
     func fetchEpisodes(baseUrl: String, completionHandler: @escaping ([Episode]) -> ()) {
+        print(baseUrl)
         let feedUrl = URL(string: baseUrl)!
         let parser = FeedParser(URL: feedUrl)
         parser.parseAsync(queue: DispatchQueue.global(qos: .userInitiated)) { (result) in
@@ -60,8 +61,11 @@ class APIService {
                 let title = item.title ?? ""
                 let pubDate = item.pubDate ?? Date()
                 let summary = item.iTunes?.iTunesSummary ?? ""
+                let streamUrl = item.enclosure?.attributes?.url ?? ""
+                let imageUrl = item.iTunes?.iTunesImage?.attributes?.href ?? feed.iTunes?.iTunesImage?.attributes?.href ?? ""
                 
-                let episode = Episode(title: title, pubDate: pubDate, summary: summary)
+                let episode = Episode(title: title, pubDate: pubDate, summary: summary,
+                                      streamUrl: streamUrl, imageUrl: imageUrl)
                 episodes.append(episode)
             }
             

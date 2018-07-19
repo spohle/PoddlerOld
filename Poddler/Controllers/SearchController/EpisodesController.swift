@@ -65,6 +65,25 @@ extension EpisodesController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 105
+        return 100
+    }
+}
+
+//MARK: - TABLE VIEW DELEGATE
+extension EpisodesController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let episode = self.episodes[indexPath.row]
+        
+        let window = UIApplication.shared.keyWindow
+        guard var frame = window?.frame else { return }
+        frame.origin.y += frame.size.height
+        let playerView = EpisodePlayerView(frame: frame)
+        playerView.episode = episode
+        playerView.setupUserInterface()
+        window?.addSubview(playerView)
+        
+        UIView.animate(withDuration: 0.3) {
+            playerView.frame.origin.y = 0.0
+        }
     }
 }
