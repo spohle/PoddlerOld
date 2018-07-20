@@ -82,6 +82,7 @@ extension EpisodesController {
         playerView.podcastImageUrl = self.podcast?.artworkUrl600 ?? ""
         playerView.setupUserInterface()
         window?.addSubview(playerView)
+        playerView.play()
         
         UIView.animate(withDuration: 0.3) {
             playerView.frame.origin.y = 0.0

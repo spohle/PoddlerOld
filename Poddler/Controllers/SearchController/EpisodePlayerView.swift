@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import AVKit
 
 class EpisodePlayerView: UIView {
     override init(frame: CGRect) {
@@ -22,6 +23,12 @@ class EpisodePlayerView: UIView {
     
     var episode:Episode?
     var podcastImageUrl: String?
+    
+    let mediaPlayer: AVPlayer = {
+        let player = AVPlayer()
+        
+        return player
+    }()
     
     lazy var uiDismissButton:UIButton = {
        let button = UIButton()
@@ -237,8 +244,6 @@ class EpisodePlayerView: UIView {
         uiMainStackView.setCustomSpacing(20.0, after: uiImageView)
         uiMainStackView.setCustomSpacing(15.0, after: uiAuthorLabel)
         uiMainStackView.setCustomSpacing(40, after: uiPlayButtonsStackView)
-        
-        print(self.subviews.count)
     }
     
     @objc func handleDismiss() {
@@ -247,5 +252,16 @@ class EpisodePlayerView: UIView {
         }) { (success) in
             self.removeFromSuperview()
         }
+    }
+}
+
+extension EpisodePlayerView {
+    func play() {
+        print("Playing: \(episode?.streamUrl ?? "")")
+        
+        let mediaUrl = URL(string: episode?.streamUrl ?? "")
+        let mediaPlayerItem = AVPlayerItem(url: mediaUrl!)
+        mediaPlayer.replaceCurrentItem(with: mediaPlayerItem)
+        mediaPlayer.play()
     }
 }
