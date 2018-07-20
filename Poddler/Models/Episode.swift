@@ -14,4 +14,5 @@ struct Episode {
     var summary: String
     var streamUrl: String
     var imageUrl: String
+    var author: String
 }

@@ -25,6 +25,9 @@ class PodcastCell: UITableViewCell {
             
             guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
             podcastImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "appicon"))
+            
+            podcastImageView.clipsToBounds = true
+            podcastImageView.layer.cornerRadius = 10
         }
     }
 }

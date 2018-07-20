@@ -58,6 +58,7 @@ class APIService {
             var episodes = [Episode]()
             guard let items = feed.items else { return }
             items.forEach { item in
+                let author = item.iTunes?.iTunesAuthor ?? ""
                 let title = item.title ?? ""
                 let pubDate = item.pubDate ?? Date()
                 let summary = item.iTunes?.iTunesSummary ?? ""
@@ -65,7 +66,7 @@ class APIService {
                 let imageUrl = item.iTunes?.iTunesImage?.attributes?.href ?? feed.iTunes?.iTunesImage?.attributes?.href ?? ""
                 
                 let episode = Episode(title: title, pubDate: pubDate, summary: summary,
-                                      streamUrl: streamUrl, imageUrl: imageUrl)
+                                      streamUrl: streamUrl, imageUrl: imageUrl, author: author)
                 episodes.append(episode)
             }
             

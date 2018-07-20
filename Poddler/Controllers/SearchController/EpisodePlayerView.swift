@@ -13,7 +13,7 @@ class EpisodePlayerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor(r: 240, g: 240, b: 240)
+        backgroundColor = UIColor(r: 40, g: 40, b: 40)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,7 +26,7 @@ class EpisodePlayerView: UIView {
        let button = UIButton()
         
         button.setTitle("DISMISS", for: .normal)
-        button.setTitleColor(UIColor.darkGray, for: .normal)
+        button.setTitleColor(UIColor.lightGray, for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -35,9 +35,11 @@ class EpisodePlayerView: UIView {
     
     let uiImageView:UIImageView = {
         let view = UIImageView()
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 10
+        
         return view
     }()
     
@@ -46,7 +48,6 @@ class EpisodePlayerView: UIView {
         
         slider.minimumValue = 0.0
         slider.maximumValue = 100.0
-       
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
@@ -56,7 +57,7 @@ class EpisodePlayerView: UIView {
         
         label.text = "00:00"
         label.textAlignment = .left
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -67,7 +68,7 @@ class EpisodePlayerView: UIView {
         
         label.text = "00:00"
         label.textAlignment = .right
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -76,6 +77,7 @@ class EpisodePlayerView: UIView {
     let uiTitleLabel: UILabel = {
        let label = UILabel()
         
+        label.textColor = .lightGray
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 14)
@@ -83,23 +85,35 @@ class EpisodePlayerView: UIView {
         return label
     }()
     
+    let uiAuthorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(r: 242, g: 109, b: 124)
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     let uiSkipBackButton: UIButton = {
        let button = UIButton()
-        button.setImage(UIImage(named: "skipBack")?.imageScaled(to: CGSize(width: 50, height: 50)), for: .normal)
+        button.setImage(UIImage(named: "skipBack")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = UIColor.lightGray
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     let uiPlayButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "play")?.imageScaled(to: CGSize(width: 50, height: 50)), for: .normal)
+        button.setImage(UIImage(named: "play")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = UIColor.lightGray
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     let uiSkipForwardButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "skipForward")?.imageScaled(to: CGSize(width: 50, height: 50)), for: .normal)
+        button.setImage(UIImage(named: "skipForward")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = UIColor.lightGray
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -128,6 +142,20 @@ class EpisodePlayerView: UIView {
         return view
     }()
     
+    let uiVolumeSlider: UISlider = {
+        let slider = UISlider()
+        
+        slider.minimumValue = 0.0
+        slider.maximumValue = 100.0
+        slider.value = 50
+        
+        slider.minimumValueImage = UIImage(named: "low-volume")?.tinted(with: UIColor.lightGray)
+        slider.maximumValueImage = UIImage(named: "hi-volume")?.tinted(with: UIColor.lightGray)
+        
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        return slider
+    }()
+    
     let uiEmptyView: UIView = {
        let view = UIView()
         
@@ -152,8 +180,8 @@ class EpisodePlayerView: UIView {
         guard let imageUrl = URL(string: urlString) else { return }
 
         uiImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "appicon"))
-        uiImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        uiImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        uiImageView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        uiImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
 
         uiTimeSlider.widthAnchor.constraint(equalToConstant: frame.width*0.8).isActive = true
         uiTimeSlider.heightAnchor.constraint(equalToConstant: uiTimeSlider.frame.height).isActive = true
@@ -170,6 +198,9 @@ class EpisodePlayerView: UIView {
         uiTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 60).isActive = true
         uiTitleLabel.text = episode?.title
         
+        uiAuthorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 30).isActive = true
+        uiAuthorLabel.text = episode?.author
+        
         uiSkipBackButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         uiPlayButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         uiSkipForwardButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -185,13 +216,22 @@ class EpisodePlayerView: UIView {
         uiPlayButtonsStackView.addArrangedSubview(emptyView2)
         uiPlayButtonsStackView.addArrangedSubview(uiSkipForwardButton)
         
+        uiVolumeSlider.widthAnchor.constraint(equalToConstant: frame.width*0.8).isActive = true
+        
         uiMainStackView.addArrangedSubview(uiDismissButton)
         uiMainStackView.addArrangedSubview(uiImageView)
         uiMainStackView.addArrangedSubview(uiTimeSlider)
         uiMainStackView.addArrangedSubview(uiPlayTimeLabelsStackView)
         uiMainStackView.addArrangedSubview(uiTitleLabel)
+        uiMainStackView.addArrangedSubview(uiAuthorLabel)
         uiMainStackView.addArrangedSubview(uiPlayButtonsStackView)
+        uiMainStackView.addArrangedSubview(uiVolumeSlider)
         uiMainStackView.addArrangedSubview(uiEmptyView)
+        
+        // set some custom spacing
+        uiMainStackView.setCustomSpacing(20.0, after: uiImageView)
+        uiMainStackView.setCustomSpacing(15.0, after: uiAuthorLabel)
+        uiMainStackView.setCustomSpacing(40, after: uiPlayButtonsStackView)
     }
     
     @objc func handleDismiss() {
