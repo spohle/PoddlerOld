@@ -27,7 +27,6 @@ class EpisodePlayerView: UIView {
         
         button.setTitle("DISMISS", for: .normal)
         button.setTitleColor(UIColor.darkGray, for: .normal)
-        
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -38,11 +37,6 @@ class EpisodePlayerView: UIView {
         let view = UIImageView()
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
-//        view.layer.shadowColor = UIColor.black.cgColor
-//        view.layer.shadowOpacity = 1
-//        view.layer.shadowOffset = CGSize(width: 20, height: 20)
-//        view.layer.shadowRadius = 10
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -110,70 +104,94 @@ class EpisodePlayerView: UIView {
         return button
     }()
     
+    let uiMainStackView: UIStackView = {
+        let view = UIStackView()
+        
+        view.axis = .vertical
+        view.alignment = .center
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let uiPlayTimeLabelsStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let uiPlayButtonsStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.alignment = .center
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let uiEmptyView: UIView = {
+       let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     func setupUserInterface() {
-        addSubview(uiDismissButton)
-        uiDismissButton.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
-        uiDismissButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        uiDismissButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        uiDismissButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        addSubview(uiMainStackView)
+        uiMainStackView.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
+        uiMainStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        uiMainStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        uiMainStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        
+        uiDismissButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
         
         var urlString = episode?.imageUrl ?? ""
         if !urlString.contains("https") {
             urlString = urlString.replacingOccurrences(of: "http", with: "https")
         }
-        
+
         guard let imageUrl = URL(string: urlString) else { return }
-        
-        addSubview(uiImageView)
-        let viewWidth = frame.width * 0.65
+
         uiImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "appicon"))
-        uiImageView.topAnchor.constraint(equalTo: uiDismissButton.bottomAnchor, constant: 25).isActive = true
-        uiImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        uiImageView.widthAnchor.constraint(equalToConstant: viewWidth).isActive = true
-        uiImageView.heightAnchor.constraint(equalToConstant: viewWidth).isActive = true
-        
-        addSubview(uiTimeSlider)
-        uiTimeSlider.topAnchor.constraint(equalTo: uiImageView.bottomAnchor, constant: 25).isActive = true
-        uiTimeSlider.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        uiImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        uiImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+
         uiTimeSlider.widthAnchor.constraint(equalToConstant: frame.width*0.8).isActive = true
         uiTimeSlider.heightAnchor.constraint(equalToConstant: uiTimeSlider.frame.height).isActive = true
         
-        addSubview(uiTimePlayedLabel)
-        uiTimePlayedLabel.topAnchor.constraint(equalTo: uiTimeSlider.bottomAnchor, constant: 0).isActive = true
-        uiTimePlayedLabel.leftAnchor.constraint(equalTo: uiTimeSlider.leftAnchor).isActive = true
-        uiTimePlayedLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        uiPlayTimeLabelsStackView.widthAnchor.constraint(equalToConstant: frame.width*0.8).isActive = true
+        uiPlayTimeLabelsStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
         uiTimePlayedLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        addSubview(uiTimeLeftLabel)
-        uiTimeLeftLabel.topAnchor.constraint(equalTo: uiTimeSlider.bottomAnchor, constant: 0).isActive = true
-        uiTimeLeftLabel.rightAnchor.constraint(equalTo: uiTimeSlider.rightAnchor).isActive = true
-        uiTimeLeftLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
         uiTimeLeftLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        uiPlayTimeLabelsStackView.addArrangedSubview(uiTimePlayedLabel)
+        uiPlayTimeLabelsStackView.addArrangedSubview(uiTimeLeftLabel)
         
-        addSubview(uiTitleLabel)
-        uiTitleLabel.topAnchor.constraint(equalTo: uiTimePlayedLabel.bottomAnchor, constant: -10).isActive = true
-        uiTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         uiTitleLabel.widthAnchor.constraint(equalToConstant: frame.width*0.8).isActive = true
-        uiTitleLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        uiTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 60).isActive = true
         uiTitleLabel.text = episode?.title
         
-        addSubview(uiSkipBackButton)
-        uiSkipBackButton.topAnchor.constraint(equalTo: uiTitleLabel.bottomAnchor, constant: 0).isActive = true
-        uiSkipBackButton.leftAnchor.constraint(equalTo: uiTimeSlider.leftAnchor, constant: 10).isActive = true
-        uiSkipBackButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         uiSkipBackButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        addSubview(uiPlayButton)
-        uiPlayButton.topAnchor.constraint(equalTo: uiTitleLabel.bottomAnchor, constant: 0).isActive = true
-        uiPlayButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        uiPlayButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         uiPlayButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        addSubview(uiSkipForwardButton)
-        uiSkipForwardButton.topAnchor.constraint(equalTo: uiTitleLabel.bottomAnchor, constant: 0).isActive = true
-        uiSkipForwardButton.rightAnchor.constraint(equalTo: uiTimeSlider.rightAnchor, constant: -10).isActive = true
-        uiSkipForwardButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         uiSkipForwardButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        let emptyView = UIView()
+        emptyView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        let emptyView2 = UIView()
+        emptyView2.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        uiPlayButtonsStackView.addArrangedSubview(uiSkipBackButton)
+        uiPlayButtonsStackView.addArrangedSubview(emptyView)
+        uiPlayButtonsStackView.addArrangedSubview(uiPlayButton)
+        uiPlayButtonsStackView.addArrangedSubview(emptyView2)
+        uiPlayButtonsStackView.addArrangedSubview(uiSkipForwardButton)
+        
+        uiMainStackView.addArrangedSubview(uiDismissButton)
+        uiMainStackView.addArrangedSubview(uiImageView)
+        uiMainStackView.addArrangedSubview(uiTimeSlider)
+        uiMainStackView.addArrangedSubview(uiPlayTimeLabelsStackView)
+        uiMainStackView.addArrangedSubview(uiTitleLabel)
+        uiMainStackView.addArrangedSubview(uiPlayButtonsStackView)
+        uiMainStackView.addArrangedSubview(uiEmptyView)
     }
     
     @objc func handleDismiss() {
