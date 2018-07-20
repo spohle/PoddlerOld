@@ -9,6 +9,7 @@
 import UIKit
 import SDWebImage
 import AVKit
+import MediaPlayer
 
 class EpisodePlayerView: UIView {
     override init(frame: CGRect) {
@@ -23,12 +24,12 @@ class EpisodePlayerView: UIView {
     
     var episode:Episode?
     var podcastImageUrl: String?
+    var playing = false
     
-    let mediaPlayer: AVPlayer = {
-        let player = AVPlayer()
-        
-        return player
-    }()
+    var mediaPlayer: AVPlayer?
+    var playerItem: AVPlayerItem?
+    var totalSeconds:Int?
+    var observerToken:Any?
     
     lazy var uiDismissButton:UIButton = {
        let button = UIButton()
@@ -56,6 +57,9 @@ class EpisodePlayerView: UIView {
         
         slider.minimumValue = 0.0
         slider.maximumValue = 100.0
+        
+        slider.addTarget(self, action: #selector(handleSliderChange), for: .valueChanged)
+        
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
@@ -63,7 +67,7 @@ class EpisodePlayerView: UIView {
     let uiTimePlayedLabel:UILabel = {
        let label = UILabel()
         
-        label.text = "00:00"
+        label.text = "00:00:00"
         label.textAlignment = .left
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 12)
@@ -74,7 +78,7 @@ class EpisodePlayerView: UIView {
     let uiTimeLeftLabel:UILabel = {
         let label = UILabel()
         
-        label.text = "00:00"
+        label.text = "00:00:00"
         label.textAlignment = .right
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 12)
@@ -106,6 +110,9 @@ class EpisodePlayerView: UIView {
        let button = UIButton()
         button.setImage(UIImage(named: "skipBack")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = UIColor.lightGray
+        
+        button.addTarget(self, action: #selector(handleSkipForward), for: .touchUpInside)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -114,6 +121,9 @@ class EpisodePlayerView: UIView {
         let button = UIButton()
         button.setImage(UIImage(named: "play")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = UIColor.lightGray
+        
+        button.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -122,6 +132,9 @@ class EpisodePlayerView: UIView {
         let button = UIButton()
         button.setImage(UIImage(named: "skipForward")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = UIColor.lightGray
+        
+        button.addTarget(self, action: #selector(handleSkipBackward), for: .touchUpInside)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -155,10 +168,13 @@ class EpisodePlayerView: UIView {
         
         slider.minimumValue = 0.0
         slider.maximumValue = 100.0
-        slider.value = 50
+        
+        slider.value = AVAudioSession.sharedInstance().outputVolume * 100.0
         
         slider.minimumValueImage = UIImage(named: "low-volume")?.tinted(with: UIColor.lightGray)
         slider.maximumValueImage = UIImage(named: "hi-volume")?.tinted(with: UIColor.lightGray)
+        
+        slider.addTarget(self, action: #selector(handleVolumeChange), for: .valueChanged)
         
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
@@ -247,21 +263,181 @@ class EpisodePlayerView: UIView {
     }
     
     @objc func handleDismiss() {
+        self.mediaPlayer?.pause()
+        self.mediaPlayer?.removeTimeObserver(self.observerToken!)
+        
         UIView.animate(withDuration: 0.4, animations: {
             self.frame.origin.y += self.frame.size.height
         }) { (success) in
             self.removeFromSuperview()
         }
     }
+    
+    @objc func handlePlayPause() {
+        if self.playing == true {
+            let image = UIImage(named: "play")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate)
+            uiPlayButton.setImage(image, for: .normal)
+            self.playing = false
+            self.mediaPlayer?.pause()
+        } else {
+            let image = UIImage(named: "pause")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate)
+            uiPlayButton.setImage(image, for: .normal)
+            self.playing = true
+            self.mediaPlayer?.play()
+        }
+    }
+    
+    @objc func handleSkipForward() {
+        guard let currentTime = self.mediaPlayer?.currentTime() else { return }
+        
+        let offsetTime = CMTimeMakeWithSeconds(CMTimeGetSeconds(currentTime) - 15, preferredTimescale: currentTime.timescale);
+        
+        guard let player = self.mediaPlayer else { return }
+        player.seek(to: offsetTime)
+        self.updateUserInterface()
+    }
+    
+    @objc func handleSkipBackward() {
+        guard let currentTime = self.mediaPlayer?.currentTime() else { return }
+        
+        let offsetTime = CMTimeMakeWithSeconds(CMTimeGetSeconds(currentTime) + 15, preferredTimescale: currentTime.timescale);
+        
+        guard let player = self.mediaPlayer else { return }
+        player.seek(to: offsetTime)
+        self.updateUserInterface()
+    }
+    
+    @objc func handleSliderChange() {
+        let value = self.uiTimeSlider.value
+        let offsetSeconds = Double(value/100.0) * Double(self.totalSeconds!)
+        guard let currentTime = self.mediaPlayer?.currentTime() else { return }
+        let playTime = CMTime(seconds: offsetSeconds, preferredTimescale: currentTime.timescale)
+        guard let player = self.mediaPlayer else { return }
+        player.seek(to: playTime)
+    }
+    
+    @objc func handleVolumeChange() {
+        self.mediaPlayer?.volume = self.uiVolumeSlider.value / 100.0
+    }
 }
 
 extension EpisodePlayerView {
-    func play() {
-        print("Playing: \(episode?.streamUrl ?? "")")
+    func prepareToPlay() {
+        let url = URL(string: episode?.streamUrl ?? "")
         
-        let mediaUrl = URL(string: episode?.streamUrl ?? "")
-        let mediaPlayerItem = AVPlayerItem(url: mediaUrl!)
-        mediaPlayer.replaceCurrentItem(with: mediaPlayerItem)
-        mediaPlayer.play()
+        // Create asset to be played
+        let asset = AVAsset(url: url!)
+        
+        let assetKeys = [
+            "playable",
+            "hasProtectedContent"
+        ]
+        // Create a new AVPlayerItem with the asset and an
+        // array of asset keys to be automatically loaded
+        self.playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: assetKeys)
+        
+        
+        // Register as an observer of the player item's status property
+        self.playerItem?.addObserver(self,
+                               forKeyPath: #keyPath(AVPlayerItem.status),
+                               options: [.old, .new],
+                               context: nil)
+        
+        // Associate the player item with the player
+        mediaPlayer = AVPlayer(playerItem: playerItem)
+    }
+    
+    func playAudio() {
+        let image = UIImage(named: "pause")?.imageScaled(to: CGSize(width: 50, height: 50)).withRenderingMode(.alwaysTemplate)
+        uiPlayButton.setImage(image, for: .normal)
+        
+        if let player = mediaPlayer {
+            self.playing = true
+            self.totalSeconds = self.mediaPlayer?.currentItem?.asset.duration.seconds.toInt()!
+            player.play()
+            addPeriodicTimeObserver()
+        } else {
+            return
+        }
+    }
+    
+    func addPeriodicTimeObserver() {
+        // Invoke callback every half second
+        let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        // Queue on which to invoke the callback
+        let mainQueue = DispatchQueue.main
+        // Add time observer
+        let timeObserverToken = self.mediaPlayer?.addPeriodicTimeObserver(forInterval: interval, queue: mainQueue) {
+                [weak self] time in
+            self?.updateUserInterface()
+        }
+        
+        self.observerToken = timeObserverToken
+    }
+    
+    func updateUserInterface() {
+        let currentSeconds = self.mediaPlayer?.currentTime().seconds.toInt()
+        let remainingSeconds = (self.totalSeconds ?? 0) - (currentSeconds ?? 0)
+        
+        let (phours, pminutes, pseconds) = self.secondsToHoursMinutesSeconds(seconds: currentSeconds ?? 0)
+        self.uiTimePlayedLabel.text = String(format: "%02d:%02d:%02d", phours, pminutes, pseconds)
+        
+        let (rhours, rminutes, rseconds) = self.secondsToHoursMinutesSeconds(seconds: remainingSeconds)
+        self.uiTimeLeftLabel.text = String(format: "%02d:%02d:%02d", rhours, rminutes, rseconds)
+        
+        let percentagePlayed = 100.0 - (Double(remainingSeconds) / (Double(self.totalSeconds ?? 0) / 100.0))
+        self.uiTimeSlider.value = Float(percentagePlayed)
+    }
+    
+   
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        // Only handle observations for the playerItemContext
+        guard context == context else {
+            super.observeValue(forKeyPath: keyPath,
+                               of: object,
+                               change: change,
+                               context: context)
+            return
+        }
+        
+        
+        if keyPath == #keyPath(AVPlayerItem.status) {
+            let status: AVPlayerItem.Status
+            
+            // Get the status change from the change dictionary
+            if let statusNumber = change?[.newKey] as? NSNumber {
+                status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
+            } else {
+                status = .unknown
+            }
+            
+            // Switch over the status
+            switch status {
+            case .readyToPlay:
+                print("ready to play")
+                playAudio()
+            case .failed:
+                print("failed")
+            case .unknown:
+                print("unknown error")
+            }
+        }
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+}
+
+extension Double {
+    func toInt() -> Int? {
+        if self > Double(Int.min) && self < Double(Int.max) {
+            return Int(self)
+        } else {
+            return nil
+        }
     }
 }
