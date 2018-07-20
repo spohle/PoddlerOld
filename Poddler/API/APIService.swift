@@ -57,16 +57,8 @@ class APIService {
             
             var episodes = [Episode]()
             guard let items = feed.items else { return }
-            items.forEach { item in
-                let author = item.iTunes?.iTunesAuthor ?? ""
-                let title = item.title ?? ""
-                let pubDate = item.pubDate ?? Date()
-                let summary = item.iTunes?.iTunesSummary ?? ""
-                let streamUrl = item.enclosure?.attributes?.url ?? ""
-                let imageUrl = item.iTunes?.iTunesImage?.attributes?.href ?? feed.iTunes?.iTunesImage?.attributes?.href ?? ""
-                
-                let episode = Episode(title: title, pubDate: pubDate, summary: summary,
-                                      streamUrl: streamUrl, imageUrl: imageUrl, author: author)
+            items.forEach { feedItem in
+                let episode = Episode.init(feedItem: feedItem)
                 episodes.append(episode)
             }
             

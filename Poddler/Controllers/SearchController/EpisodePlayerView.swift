@@ -21,6 +21,7 @@ class EpisodePlayerView: UIView {
     }
     
     var episode:Episode?
+    var podcastImageUrl: String?
     
     lazy var uiDismissButton:UIButton = {
        let button = UIButton()
@@ -176,8 +177,12 @@ class EpisodePlayerView: UIView {
         if !urlString.contains("https") {
             urlString = urlString.replacingOccurrences(of: "http", with: "https")
         }
-
-        guard let imageUrl = URL(string: urlString) else { return }
+        
+        if urlString == "" {
+            urlString = podcastImageUrl ?? ""
+        }
+        
+        let imageUrl = URL(string: urlString)
 
         uiImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "appicon"))
         uiImageView.widthAnchor.constraint(equalToConstant: 250).isActive = true
@@ -232,6 +237,8 @@ class EpisodePlayerView: UIView {
         uiMainStackView.setCustomSpacing(20.0, after: uiImageView)
         uiMainStackView.setCustomSpacing(15.0, after: uiAuthorLabel)
         uiMainStackView.setCustomSpacing(40, after: uiPlayButtonsStackView)
+        
+        print(self.subviews.count)
     }
     
     @objc func handleDismiss() {

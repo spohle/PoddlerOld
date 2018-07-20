@@ -79,6 +79,7 @@ extension EpisodesController {
         frame.origin.y += frame.size.height
         let playerView = EpisodePlayerView(frame: frame)
         playerView.episode = episode
+        playerView.podcastImageUrl = self.podcast?.artworkUrl600 ?? ""
         playerView.setupUserInterface()
         window?.addSubview(playerView)
         
