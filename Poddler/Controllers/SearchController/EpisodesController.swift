@@ -56,9 +56,9 @@ extension EpisodesController {
         cell.episode = episode
         
         if indexPath.row%2 == 0 {
-            cell.backgroundColor = UIColor(r: 225, g: 225, b: 225)
+            cell.backgroundColor = UIColor(r: 55, g: 55, b: 55)
         } else {
-            cell.backgroundColor = UIColor(r: 240, g: 240, b: 240)
+            cell.backgroundColor = UIColor(r: 40, g: 40, b: 40)
         }
         
         return cell

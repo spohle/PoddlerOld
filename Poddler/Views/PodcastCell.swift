@@ -28,6 +28,10 @@ class PodcastCell: UITableViewCell {
             
             podcastImageView.clipsToBounds = true
             podcastImageView.layer.cornerRadius = 10
+            
+            podcastTrackNameLabel.textColor = UIColor.white.withAlphaComponent(0.9)
+            podcastArtistNameLabel.textColor = UIColor.white.withAlphaComponent(0.75)
+            podcastEpisodeCountLabel.textColor = UIColor.white.withAlphaComponent(0.5)
         }
     }
 }

@@ -24,6 +24,11 @@ class EpisodeCell: UITableViewCell {
             uiTitle.text = episode.title
             uiDate.text = dateFormatterPrint.string(from: episode.pubDate)
             uiSummary.text = episode.summary
+            
+            uiTitle.textColor = UIColor.white.withAlphaComponent(0.9)
+            uiSummary.textColor = UIColor.white.withAlphaComponent(0.75)
+            uiDate.textColor = UIColor.white.withAlphaComponent(0.5)
+            
             self.layoutSubviews()
         }
     }

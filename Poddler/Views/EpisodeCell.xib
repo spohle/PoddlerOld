@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14306.4" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14270.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14278.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,16 +18,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IU7-im-DdS">
-                        <rect key="frame" x="28" y="0.0" width="539" height="42"/>
+                        <rect key="frame" x="28" y="8" width="539" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="42" id="VYV-1M-W3V"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="42" id="VYV-1M-W3V"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-Ex-vQx">
-                        <rect key="frame" x="28" y="42" width="539" height="18"/>
+                        <rect key="frame" x="28" y="25" width="539" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="mp5-9K-YBG"/>
                         </constraints>
@@ -36,7 +36,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Summary" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhm-cb-gk0">
-                        <rect key="frame" x="28" y="60" width="539" height="32"/>
+                        <rect key="frame" x="28" y="43" width="539" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="cPz-ml-eEt"/>
                         </constraints>
@@ -47,7 +47,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="Uhm-cb-gk0" firstAttribute="top" secondItem="Ec5-Ex-vQx" secondAttribute="bottom" id="CLv-db-eKY"/>
-                    <constraint firstItem="IU7-im-DdS" firstAttribute="top" secondItem="PoP-oW-R0a" secondAttribute="top" id="HVb-l9-aJn"/>
+                    <constraint firstItem="IU7-im-DdS" firstAttribute="top" secondItem="PoP-oW-R0a" secondAttribute="top" constant="8" id="HVb-l9-aJn"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Ec5-Ex-vQx" secondAttribute="trailing" constant="8" id="f73-R0-bzJ"/>
                     <constraint firstItem="Ec5-Ex-vQx" firstAttribute="top" secondItem="IU7-im-DdS" secondAttribute="bottom" id="faf-et-TRJ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="IU7-im-DdS" secondAttribute="trailing" constant="8" id="hyD-wu-PEv"/>

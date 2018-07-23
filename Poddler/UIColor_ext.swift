@@ -13,7 +13,7 @@ struct ColorTheme {
     
     
     struct searchController {
-        static let overlayColor = UIColor(r: 220, g: 220, b: 220)
+        static let overlayColor = UIColor(r: 40, g: 40, b: 40)
         static let overlayTextColor = UIColor(r: 240, g: 240, b: 240)
     }
 }
