@@ -1,47 +1,12 @@
 //
-//  EpisodesController.swift
+//  EpisodesController_table.swift
 //  Poddler
 //
-//  Created by Sven Pohle on 7/13/18.
+//  Created by Sven Pohle on 7/24/18.
 //  Copyright © 2018 Pohle, Sven. All rights reserved.
 //
 
 import UIKit
-
-class EpisodesController: UITableViewController {
-    
-    var episodes = [Episode]()
-    
-    var podcast: Podcast? {
-        didSet {
-            navigationItem.title = podcast?.trackName
-            
-            guard let feedUrl = podcast?.feedUrl else { return }
-            APIService.shared.fetchEpisodes(baseUrl: feedUrl) { (episodes) in
-                self.episodes = episodes
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-            
-        }
-    }
-    
-    fileprivate let cellId = "podcastCellId"
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupTableView()
-    }
-    
-    fileprivate func setupTableView() {
-        let nib = UINib(nibName: "EpisodeCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: cellId)
-        tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor(r: 40, g: 40, b: 40)
-    }
-}
 
 //MARK: - TABLE VIEW DATA SOURCE
 extension EpisodesController {
@@ -67,10 +32,7 @@ extension EpisodesController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-}
-
-//MARK: - TABLE VIEW DELEGATE
-extension EpisodesController {
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episode = self.episodes[indexPath.row]
         
@@ -83,10 +45,11 @@ extension EpisodesController {
         playerView.setupUserInterface()
         window?.addSubview(playerView)
         playerView.prepareToPlay()
-//        playerView.play()
+        //        playerView.play()
         
         UIView.animate(withDuration: 0.3) {
             playerView.frame.origin.y = 0.0
         }
     }
 }
+
