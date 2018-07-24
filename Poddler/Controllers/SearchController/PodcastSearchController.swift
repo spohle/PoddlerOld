@@ -141,9 +141,11 @@ extension PodcastsSearchController: UISearchControllerDelegate {
 
 extension PodcastsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
-            self.podcasts = podcasts
-            self.tableView.reloadData()
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (timer) in
+            APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
+                self.podcasts = podcasts
+                self.tableView.reloadData()
+            }
         }
     }
 }
