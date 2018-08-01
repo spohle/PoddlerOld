@@ -45,7 +45,6 @@ extension EpisodesController {
         playerView.setupUserInterface()
         window?.addSubview(playerView)
         playerView.prepareToPlay()
-        //        playerView.play()
         
         UIView.animate(withDuration: 0.3) {
             playerView.frame.origin.y = 0.0

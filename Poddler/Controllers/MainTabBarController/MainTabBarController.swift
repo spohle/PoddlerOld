@@ -12,10 +12,15 @@ import UIKit
 class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tabBar.tintColor = ColorTheme.tabBarTintColor
-        
         setupViewControllers()
+        
+        setupPlayerDetailsView()
+    }
+    
+    fileprivate func setupPlayerDetailsView() {
+        
+        
     }
     
     //MARK: - Setup Functions
