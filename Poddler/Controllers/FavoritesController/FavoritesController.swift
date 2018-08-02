@@ -9,8 +9,10 @@
 import UIKit
 import CoreData
 
-class FavoritesController: UICollectionViewController
+class FavoritesController: UITableViewController
 {
+    let cellId = "favoriteCellId"
+    
     lazy var uiAddButton:UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -20,29 +22,27 @@ class FavoritesController: UICollectionViewController
         return button
     }()
     
-    var favorites = [String]()
+    var favorites = [Podcast]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadFavoritesFromModel()
-        collectionView.backgroundColor = .lightGray
-        setupUserInterface()
+        setupTableView()
+        getFavoritePodcasts()
     }
     
-    func loadFavoritesFromModel() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CD_Podcast")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
-            for data in result as! [NSManagedObject] {
-                print(data.value(forKey: "subscribed") as! Bool)
-            }
-        } catch {
-            print("failed!")
+    func getFavoritePodcasts() {
+        CoreDataService.shared.getSubscribedPodcasts { (podcasts) in
+            self.favorites = podcasts
+            self.setupUserInterface()
+            self.tableView.reloadData()
         }
+    }
+    
+    func setupTableView() {
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.separatorColor = .clear
+        let nib = UINib(nibName: "PodcastCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellId)
     }
     
     
@@ -60,5 +60,29 @@ class FavoritesController: UICollectionViewController
     @objc fileprivate func searchForPodcastsCb() {
         let searchController = PodcastsSearchController()
         self.navigationController?.pushViewController(searchController, animated: true)
+    }
+}
+
+extension FavoritesController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.favorites.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PodcastCell
+        
+        if indexPath.row%2 == 0 {
+            cell.backgroundColor = UIColor(r: 55, g: 55, b: 55)
+        } else {
+            cell.backgroundColor = UIColor(r: 40, g: 40, b: 40)
+        }
+        
+        let podcast = self.favorites[indexPath.row]
+        cell.podcast = podcast
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 132
     }
 }

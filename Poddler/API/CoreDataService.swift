@@ -12,6 +12,34 @@ import UIKit
 class CoreDataService {
     static let shared = CoreDataService()
     
+    func getSubscribedPodcasts(completionHandler: @escaping ([Podcast]) -> ()) {
+        var podcasts = [Podcast]()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CD_Podcast")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+                let name = data.value(forKey: "name") as! String
+                let author = data.value(forKey: "author") as! String
+                
+                APIService.shared.fetchPodcasts(searchText: name) { (searchPodcasts) in
+                    for searchPodcast in searchPodcasts {
+                        if searchPodcast.trackName == name && searchPodcast.artistName == author {
+                            podcasts.append(searchPodcast)
+                        }
+                    }
+                    completionHandler(podcasts)
+                }
+            }
+            
+        } catch {
+            
+        }
+    }
+    
     func getSubscribedStatus(podcast: Podcast) -> Bool {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
