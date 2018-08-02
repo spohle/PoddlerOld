@@ -30,6 +30,14 @@ class EpisodesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let favImage = UIImage(named: "favempty")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: favImage, style: .plain,
+                                                            target: self, action: #selector(favPodcast))
         setupTableView()
+    }
+    
+    @objc func favPodcast() {
+        
     }
 }
