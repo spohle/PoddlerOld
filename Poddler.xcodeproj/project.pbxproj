@@ -26,9 +26,8 @@
 		57F6C9682107F09300B4965B /* EpisodesController_table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6C9672107F09300B4965B /* EpisodesController_table.swift */; };
 		57F6C96C2107F19B00B4965B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6C96B2107F19B00B4965B /* ViewController.swift */; };
 		9545F4348B31A219DE138D9B /* Pods_Poddler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A613C26E454E9AF96B0265 /* Pods_Poddler.framework */; };
+		F0541B242113620200A34161 /* Poddler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0541B222113620200A34161 /* Poddler.xcdatamodeld */; };
 		F0719A0F2112B4F2000F6F1D /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0719A0E2112B4F2000F6F1D /* FavoritesController.swift */; };
-		F0719A112112B8BB000F6F1D /* Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0719A102112B8BB000F6F1D /* Empty.xib */; };
-		F0E53DA72113611F008E5ECF /* Poddler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0E53DA52113611F008E5ECF /* Poddler.xcdatamodeld */; };
 		F0F289E520F6AE8D006879C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F289E420F6AE8D006879C1 /* AppDelegate.swift */; };
 		F0F289EC20F6AE8F006879C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0F289EB20F6AE8F006879C1 /* Assets.xcassets */; };
 		F0F289EF20F6AE8F006879C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0F289ED20F6AE8F006879C1 /* LaunchScreen.storyboard */; };
@@ -57,9 +56,8 @@
 		57F6C9672107F09300B4965B /* EpisodesController_table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController_table.swift; sourceTree = "<group>"; };
 		57F6C96B2107F19B00B4965B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D295DDBF4A9BD2A6D6419441 /* Pods-Poddler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poddler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Poddler/Pods-Poddler.release.xcconfig"; sourceTree = "<group>"; };
+		F0541B232113620200A34161 /* Poddler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Poddler.xcdatamodel; sourceTree = "<group>"; };
 		F0719A0E2112B4F2000F6F1D /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
-		F0719A102112B8BB000F6F1D /* Empty.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Empty.xib; sourceTree = "<group>"; };
-		F0E53DA62113611F008E5ECF /* Poddler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Poddler.xcdatamodel; sourceTree = "<group>"; };
 		F0F289E120F6AE8D006879C1 /* Poddler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poddler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F289E420F6AE8D006879C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0F289EB20F6AE8F006879C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				F0719A0E2112B4F2000F6F1D /* FavoritesController.swift */,
-				F0719A102112B8BB000F6F1D /* Empty.xib */,
 			);
 			path = FavoritesController;
 			sourceTree = "<group>";
@@ -239,7 +236,7 @@
 				57F6C95E2107EC8B00B4965B /* Extensions */,
 				57E6CF1020F7E45A000F4925 /* API */,
 				573BA31420F7ABC1002318BC /* Controllers */,
-				F0E53DA52113611F008E5ECF /* Poddler.xcdatamodeld */,
+				F0541B222113620200A34161 /* Poddler.xcdatamodeld */,
 			);
 			path = Poddler;
 			sourceTree = "<group>";
@@ -304,7 +301,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0719A112112B8BB000F6F1D /* Empty.xib in Resources */,
 				F0F289EF20F6AE8F006879C1 /* LaunchScreen.storyboard in Resources */,
 				57DDB95120FEABB700F860A0 /* EpisodeCell.xib in Resources */,
 				F0F289EC20F6AE8F006879C1 /* Assets.xcassets in Resources */,
@@ -380,7 +376,7 @@
 				57DDB9552100106100F860A0 /* EpisodePlayerView.swift in Sources */,
 				57DDB957210056B800F860A0 /* UIImage_ext.swift in Sources */,
 				57F6C9682107F09300B4965B /* EpisodesController_table.swift in Sources */,
-				F0E53DA72113611F008E5ECF /* Poddler.xcdatamodeld in Sources */,
+				F0541B242113620200A34161 /* Poddler.xcdatamodeld in Sources */,
 				57F6C9662107EFEB00B4965B /* EpisodesController_ui.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -575,12 +571,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F0E53DA52113611F008E5ECF /* Poddler.xcdatamodeld */ = {
+		F0541B222113620200A34161 /* Poddler.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F0E53DA62113611F008E5ECF /* Poddler.xcdatamodel */,
+				F0541B232113620200A34161 /* Poddler.xcdatamodel */,
 			);
-			currentVersion = F0E53DA62113611F008E5ECF /* Poddler.xcdatamodel */;
+			currentVersion = F0541B232113620200A34161 /* Poddler.xcdatamodel */;
 			path = Poddler.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

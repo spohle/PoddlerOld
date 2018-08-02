@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 class MainTabBarController: UITabBarController {
@@ -14,13 +15,6 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         tabBar.tintColor = ColorTheme.tabBarTintColor
         setupViewControllers()
-        
-        setupPlayerDetailsView()
-    }
-    
-    fileprivate func setupPlayerDetailsView() {
-        
-        
     }
     
     //MARK: - Setup Functions

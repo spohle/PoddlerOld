@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreData
 
 class PodcastsSearchController: UITableViewController {
     
@@ -19,6 +20,7 @@ class PodcastsSearchController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadModel()
         setupTableView()
         setupSearchBar()
         setupOverlayView()
@@ -26,4 +28,8 @@ class PodcastsSearchController: UITableViewController {
     
     let uiOverlayView = OverlayView(frame: CGRect.zero)
     let uiOverlayLabel = OverlayLabel(frame: CGRect.zero)
+    
+    func loadModel() {
+        
+    }
 }

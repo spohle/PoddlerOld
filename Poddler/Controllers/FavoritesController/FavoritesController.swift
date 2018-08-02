@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import CoreData
 
 class FavoritesController: UICollectionViewController
 {
@@ -24,11 +24,27 @@ class FavoritesController: UICollectionViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadFavoritesFromModel()
         collectionView.backgroundColor = .lightGray
-        
         setupUserInterface()
     }
+    
+    func loadFavoritesFromModel() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CD_Podcast")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+                print(data.value(forKey: "subscribed") as! Bool)
+            }
+        } catch {
+            print("failed!")
+        }
+    }
+    
     
     fileprivate func setupUserInterface() {
         if(favorites.count <= 0) {
