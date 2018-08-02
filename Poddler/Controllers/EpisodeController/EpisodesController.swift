@@ -12,7 +12,15 @@ import CoreData
 class EpisodesController: UITableViewController {
     
     var episodes = [Episode]()
-    var subscribed:Bool = false
+    var subscribed:Bool = false {
+        didSet {
+            var favImage = UIImage(named: "favempty")
+            if self.subscribed == true {
+                favImage = UIImage(named: "fav")
+            }
+            navigationItem.rightBarButtonItem?.image = favImage
+        }
+    }
     
     var podcast: Podcast? {
         didSet {
@@ -34,78 +42,20 @@ class EpisodesController: UITableViewController {
         super.viewDidLoad()
         let favImage = UIImage(named: "favempty")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: favImage, style: .plain,
-                                                            target: self, action: #selector(favPodcast))
+                                                            target: self, action: #selector(changeSubscriptionStatus))
         
         getSubscribedStatus()
         setupTableView()
     }
     
     func getSubscribedStatus() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CD_Podcast")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
-            for data in result as! [NSManagedObject] {
-                let name = data.value(forKey: "name") as! String
-                let author = data.value(forKey: "author") as! String
-                
-                if name == podcast?.trackName && author == podcast?.artistName {
-                    self.subscribed = data.value(forKey: "subscribed") as! Bool
-                    updateSubscribedStatus()
-                }
-            }
-        } catch {
-            print("failed!")
-        }
+        let service = CoreDataService.shared
+        self.subscribed = service.getSubscribedStatus(podcast: self.podcast!)
     }
     
-    func updateSubscribedStatus() {
-        var favImage = UIImage(named: "favempty")
-        if self.subscribed == true {
-            favImage = UIImage(named: "fav")
-        }
-        navigationItem.rightBarButtonItem?.image = favImage
-    }
-    
-    @objc func favPodcast() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        
+    @objc func changeSubscriptionStatus() {
         self.subscribed = !self.subscribed
-        updateSubscribedStatus()
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CD_Podcast")
-        request.predicate = NSPredicate(format: "name = %@", podcast?.trackName ?? "")
-        do {
-            let result = try context.fetch(request)
-            if result.count != 0 {
-                let managedObject = result[0] as! NSManagedObject
-                managedObject.setValue(self.subscribed, forKey: "subscribed")
-                
-                saveContext(context: context)
-            } else {
-                let entity = NSEntityDescription.entity(forEntityName: "CD_Podcast", in: context)
-                let newPodcast = NSManagedObject(entity: entity!, insertInto: context)
-                newPodcast.setValue(podcast?.trackName, forKey: "name")
-                newPodcast.setValue(podcast?.artistName, forKey: "author")
-                newPodcast.setValue(self.subscribed, forKey: "subscribed")
-                
-                saveContext(context: context)
-            }
-        } catch {
-            
-        }
-        
-    }
-    
-    fileprivate func saveContext(context:NSManagedObjectContext) {
-        do {
-            try context.save()
-        } catch {
-            print("Failed saving")
-        }
+        let service = CoreDataService.shared
+        service.updateSubscribedStatus(podcast: self.podcast!, subscribed: self.subscribed)
     }
 }
