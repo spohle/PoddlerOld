@@ -88,4 +88,10 @@ extension FavoritesController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 132
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let episodesController = EpisodesController()
+        episodesController.podcast = favorites[indexPath.row]
+        navigationController?.pushViewController(episodesController, animated: true)
+    }
 }
