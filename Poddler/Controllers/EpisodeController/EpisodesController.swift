@@ -24,8 +24,6 @@ class EpisodesController: UITableViewController {
     
     var podcast: Podcast? {
         didSet {
-            
-            
             navigationItem.title = podcast?.trackName
             
             guard let feedUrl = podcast?.feedUrl else { return }
@@ -35,6 +33,7 @@ class EpisodesController: UITableViewController {
                     self.tableView.reloadData()
                 }
             }
+            
         }
     }
     
@@ -46,7 +45,7 @@ class EpisodesController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: favImage, style: .plain,
                                                             target: self, action: #selector(changeSubscriptionStatus))
         
-        getSubscribedStatus()
+        self.subscribed = self.podcast?.getSubscribedStatus() ?? false
         setupTableView()
     }
     

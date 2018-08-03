@@ -14,4 +14,9 @@ struct Podcast: Decodable, Encodable {
     var artworkUrl600: String?
     var trackCount: Int?
     var feedUrl: String?
+    
+    func getSubscribedStatus() -> Bool {
+        let service = CoreDataService.shared
+        return service.getSubscribedStatus(podcast: self)
+    }
 }
