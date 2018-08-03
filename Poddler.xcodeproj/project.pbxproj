@@ -29,6 +29,8 @@
 		F0541B242113620200A34161 /* Poddler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0541B222113620200A34161 /* Poddler.xcdatamodeld */; };
 		F0719A0F2112B4F2000F6F1D /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0719A0E2112B4F2000F6F1D /* FavoritesController.swift */; };
 		F08A71522113921C005E1A6D /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08A71512113921C005E1A6D /* CoreDataService.swift */; };
+		F08A71542114D38D005E1A6D /* FavoritesController_table.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08A71532114D38D005E1A6D /* FavoritesController_table.swift */; };
+		F08A71562114D3C6005E1A6D /* FavoritesController_ui.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08A71552114D3C6005E1A6D /* FavoritesController_ui.swift */; };
 		F0F289E520F6AE8D006879C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F289E420F6AE8D006879C1 /* AppDelegate.swift */; };
 		F0F289EC20F6AE8F006879C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0F289EB20F6AE8F006879C1 /* Assets.xcassets */; };
 		F0F289EF20F6AE8F006879C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0F289ED20F6AE8F006879C1 /* LaunchScreen.storyboard */; };
@@ -60,6 +62,8 @@
 		F0541B232113620200A34161 /* Poddler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Poddler.xcdatamodel; sourceTree = "<group>"; };
 		F0719A0E2112B4F2000F6F1D /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		F08A71512113921C005E1A6D /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		F08A71532114D38D005E1A6D /* FavoritesController_table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController_table.swift; sourceTree = "<group>"; };
+		F08A71552114D3C6005E1A6D /* FavoritesController_ui.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController_ui.swift; sourceTree = "<group>"; };
 		F0F289E120F6AE8D006879C1 /* Poddler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poddler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F289E420F6AE8D006879C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0F289EB20F6AE8F006879C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -207,6 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				F0719A0E2112B4F2000F6F1D /* FavoritesController.swift */,
+				F08A71532114D38D005E1A6D /* FavoritesController_table.swift */,
+				F08A71552114D3C6005E1A6D /* FavoritesController_ui.swift */,
 			);
 			path = FavoritesController;
 			sourceTree = "<group>";
@@ -362,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				573BA31720F7AC26002318BC /* PodcastSearchController.swift in Sources */,
+				F08A71562114D3C6005E1A6D /* FavoritesController_ui.swift in Sources */,
 				57F6C9642107EF9A00B4965B /* PodcastController_table.swift in Sources */,
 				57E6CF1220F7E46A000F4925 /* APIService.swift in Sources */,
 				57E6CF1720F7EA8D000F4925 /* PodcastCell.swift in Sources */,
@@ -373,6 +380,7 @@
 				573BA31120F6D74F002318BC /* UIColor_ext.swift in Sources */,
 				F0F289E520F6AE8D006879C1 /* AppDelegate.swift in Sources */,
 				F0F289F720F6AF6B006879C1 /* MainTabBarController.swift in Sources */,
+				F08A71542114D38D005E1A6D /* FavoritesController_table.swift in Sources */,
 				57F6C9622107EDD600B4965B /* PodcastSearchController_ui.swift in Sources */,
 				57F6C96C2107F19B00B4965B /* ViewController.swift in Sources */,
 				F0719A0F2112B4F2000F6F1D /* FavoritesController.swift in Sources */,
