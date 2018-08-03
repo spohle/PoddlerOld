@@ -47,15 +47,15 @@ class CoreDataService {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CD_Podcast")
         request.returnsObjectsAsFaults = false
         do {
-            let result = try context.fetch(request)
-            for data in result as! [NSManagedObject] {
+            let queryResult = try context.fetch(request)
+            for element in queryResult {
+                let data = element as! NSManagedObject
                 let name = data.value(forKey: "name") as! String
                 let author = data.value(forKey: "author") as! String
-                
                 if name == podcast.trackName && author == podcast.artistName {
                     return data.value(forKey: "subscribed") as! Bool
                 } else {
-                    return false
+                    continue
                 }
             }
         } catch {

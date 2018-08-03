@@ -33,6 +33,7 @@ extension FavoritesController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episodesController = EpisodesController()
+        episodesController.subscribed = true
         episodesController.podcast = favorites[indexPath.row]
         navigationController?.pushViewController(episodesController, animated: true)
     }

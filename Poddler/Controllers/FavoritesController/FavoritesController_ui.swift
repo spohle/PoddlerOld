@@ -14,6 +14,7 @@ extension FavoritesController {
         tableView.separatorColor = .clear
         let nib = UINib(nibName: "PodcastCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: cellId)
+        tableView.backgroundColor = UIColor(r: 40, g: 40, b: 40)
     }
 
 
