@@ -27,6 +27,9 @@ class FavoritesController: UITableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         getFavoritePodcasts()
     }
     

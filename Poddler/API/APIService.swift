@@ -46,7 +46,6 @@ class APIService {
     }
     
     func fetchEpisodes(baseUrl: String, completionHandler: @escaping ([Episode]) -> ()) {
-        print(baseUrl)
         let feedUrl = URL(string: baseUrl)!
         let parser = FeedParser(URL: feedUrl)
         parser.parseAsync(queue: DispatchQueue.global(qos: .userInitiated)) { (result) in

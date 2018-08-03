@@ -22,18 +22,18 @@ class CoreDataService {
         do {
             let result = try context.fetch(request)
             for data in result as! [NSManagedObject] {
-                let name = data.value(forKey: "name") as! String
-                let author = data.value(forKey: "author") as! String
-                
-                APIService.shared.fetchPodcasts(searchText: name) { (searchPodcasts) in
-                    for searchPodcast in searchPodcasts {
-                        if searchPodcast.trackName == name && searchPodcast.artistName == author {
-                            podcasts.append(searchPodcast)
-                        }
+                let subscribed = data.value(forKey: "subscribed") as! Bool
+                if subscribed == true {
+                    let jsonData = data.value(forKey: "jsonData") as! Data
+                    do {
+                        let podcast = try JSONDecoder().decode(Podcast.self, from: jsonData)
+                        podcasts.append(podcast)
+                    } catch {
+                        
                     }
-                    completionHandler(podcasts)
                 }
             }
+            completionHandler(podcasts)
             
         } catch {
             
@@ -70,6 +70,14 @@ class CoreDataService {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
+        var jsonData:Data?
+        do {
+            jsonData = try JSONEncoder().encode(podcast)
+        } catch {
+            
+        }
+        
+//        let jsonString = String(data: jsonData!, encoding: .utf8)
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CD_Podcast")
         request.predicate = NSPredicate(format: "name = %@", podcast.trackName ?? "")
@@ -78,6 +86,7 @@ class CoreDataService {
             if result.count != 0 {
                 let managedObject = result[0] as! NSManagedObject
                 managedObject.setValue(subscribed, forKey: "subscribed")
+                managedObject.setValue(jsonData, forKey: "jsonData")
                 
                 saveContext(context: context)
             } else {
@@ -86,6 +95,7 @@ class CoreDataService {
                 newPodcast.setValue(podcast.trackName, forKey: "name")
                 newPodcast.setValue(podcast.artistName, forKey: "author")
                 newPodcast.setValue(subscribed, forKey: "subscribed")
+                newPodcast.setValue(jsonData, forKey: "jsonData")
                 
                 saveContext(context: context)
             }
